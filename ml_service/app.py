@@ -126,7 +126,7 @@ def get_rera_data():
             return jsonify({"error": "Region parameter is required"}), 400
 
         # Validate input to prevent path traversal attacks
-        allowed_regions = {"mumbai", "thane", "nashik", "pune", "nagpur", "palghar", "raigarh", "dadra-daman"}
+        allowed_regions = {"mumbai-city","mumbai-suburban" ,"thane", "nashik", "pune", "nagpur", "palghar", "raigarh", "dadra-daman"}
         if region not in allowed_regions:
             return jsonify({"error": f"Invalid region: {region}"}), 400
 
@@ -150,4 +150,4 @@ def get_rera_data():
         return jsonify({"error": "Error retrieving data"}), 500
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(port=5001, debug=True)

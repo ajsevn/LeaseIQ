@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000"; // Ensure Flask backend is running here
+const BASE_URL = "http://localhost:5001"; // Ensure Flask backend is running here
 
 const Dashboard = () => {
   const [region, setRegion] = useState(""); 
