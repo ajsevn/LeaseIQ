@@ -123,3 +123,96 @@
       max-width: 90%;
     }
   }
+
+  /*Dashboard CSS*/
+  /* Parent container for the RERA Dashboard */
+.rera-dashboard-container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .rera-dashboard-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Title */
+.rera-dashboard-title {
+  color: #1f2937;
+}
+
+/* Filter section (Region and Field select dropdowns) */
+.rera-dashboard-filters {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rera-dashboard-region,
+.rera-dashboard-field {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.rera-dashboard-label {
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.rera-dashboard-select {
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  width: 100%;
+  max-width: 180px;
+  border: 1px solid #d1d5db;
+  color: #1f2937;
+}
+
+.rera-dashboard-button {
+  background-color: #2563eb;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+}
+
+.rera-dashboard-button:hover {
+  background-color: #1e40af;
+  transform: translateY(-2px);
+}
+
+/* Loading and Error messages */
+.rera-dashboard-loading {
+  background-color: #e5e7eb;
+  border-radius: 0.375rem;
+}
+
+.rera-dashboard-error {
+  background-color: #ef4444;
+  border-radius: 0.375rem;
+  color: #fff;
+}
+
+/* Chart Titles */
+.rera-dashboard-chart-title {
+  color: #1f2937;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 1.5rem; /* Added top margin */
+}
+
+/* Make sure charts take full width */
+.rera-dashboard-charts canvas {
+  width: 100%;
+}
+
+/* Resize Pie Chart */
+.rera-dashboard-pie-chart {
+  max-width: 400px; /* Make Pie chart smaller */
+  margin: 0 auto;
+}

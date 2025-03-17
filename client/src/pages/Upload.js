@@ -13,7 +13,7 @@ const Upload = () => {
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const response = await axios.post("http://localhost:5000/upload", formData);
+      const response = await axios.post("http://localhost:5001/upload", formData);
       setMessage(JSON.stringify(response.data, null, 2));
     } catch (error) {
       setMessage("Error uploading file");
