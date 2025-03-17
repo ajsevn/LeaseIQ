@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import "../styles/Login.css"
+import "../styles/Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,12 +19,20 @@ const Login = () => {
       const response = await loginUser(email, password);
 
       if (response.token) {
+        console.log("✅ Token received:", response.token);
         localStorage.setItem("token", response.token); // Store token
-        navigate("/dashboard"); // Redirect to dashboard
+
+        // Double-check token storage before navigating
+        if (localStorage.getItem("token")) {
+          navigate("/dashboard");
+        } else {
+          setError("Failed to store authentication token.");
+        }
       } else {
         setError(response.error || "Invalid credentials. Please try again.");
       }
     } catch (err) {
+      console.error("❌ Login error:", err);
       setError("Network error. Please try again later.");
     }
   };

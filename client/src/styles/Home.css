@@ -1,0 +1,125 @@
+/* Home Page Styles */
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* padding: 0px; */
+    background-color: #f8f9fa;
+    min-height: 100vh;
+  }
+  
+  /* Hero Section */
+  .home-hero {
+    position: relative;
+    width: 100vw;
+    height: 60vh;
+    overflow: hidden;
+  }
+  
+  .home-carousel .home-slide img {
+    width: 100vw;
+    height: 60vh;
+    object-fit: cover;
+  }
+  
+  .home-hero-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .home-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  .home-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .home-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background 0.3s;
+  }
+  
+  .home-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Feature Cards */
+  .home-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .home-card {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .home-card-inner {
+    width: 100%;
+    max-width: 320px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+  }
+  
+  .home-card-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .home-card-desc {
+    font-size: 1rem;
+  }
+  
+  /* Pagination */
+  .home-pagination {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .home-page-info {
+    font-size: 1rem;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .home-title {
+      font-size: 2rem;
+    }
+  
+    .home-carousel {
+      width: 100%;
+    }
+  
+    .home-features {
+      grid-template-columns: 1fr;
+    }
+  
+    .home-card-inner {
+      max-width: 90%;
+    }
+  }

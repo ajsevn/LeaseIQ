@@ -1,3 +1,9 @@
+html, body {
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  
 /* Navbar styling */
 .navbar {
     display: flex;

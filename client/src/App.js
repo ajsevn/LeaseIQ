@@ -1,13 +1,26 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaHome, FaSignInAlt, FaUpload, FaTachometerAlt, FaBars, FaTimes } from "react-icons/fa";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Upload from "./pages/Upload";
-import "./styles/Navbar.css"; // Ensure CSS is imported
+import ProtectedRoute from "./ProtectedRoute";
+import Home from "./pages/Home";
+import "./styles/Navbar.css";
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token")); // Persist auth
+
+  useEffect(() => {
+    console.log("Is Authenticated:", isAuthenticated);
+  }, [isAuthenticated]);
+
+  // Handle Logout
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+  };
 
   return (
     <Router>
@@ -20,27 +33,30 @@ function App() {
           </button>
           <div className={`navbar-links ${isNavOpen ? "open" : ""}`}>
             <Link to="/" className="nav-link"><FaHome className="nav-icon" /> Home</Link>
-            <Link to="/login" className="nav-link"><FaSignInAlt className="nav-icon" /> Login</Link>
-            <Link to="/upload" className="nav-link"><FaUpload className="nav-icon" /> Upload</Link>
-            <Link to="/dashboard" className="nav-link"><FaTachometerAlt className="nav-icon" /> Dashboard</Link>
+            {!isAuthenticated ? (
+              <Link to="/login" className="nav-link"><FaSignInAlt className="nav-icon" /> Login</Link>
+            ) : (
+              <>
+                <Link to="/upload" className="nav-link"><FaUpload className="nav-icon" /> Upload</Link>
+                <Link to="/dashboard" className="nav-link"><FaTachometerAlt className="nav-icon" /> Dashboard</Link>
+                <button onClick={handleLogout} className="nav-link logout-button">Logout</button>
+              </>
+            )}
           </div>
         </nav>
+
         {/* Routes */}
         <div className="flex-grow flex items-center justify-center">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
             <Route path="/upload" element={<Upload />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
           </Routes>
         </div>
       </div>
     </Router>
   );
-}
-
-function Home() {
-  return <h1 className="text-2xl font-bold">Welcome to LeaseIQ</h1>;
 }
 
 export default App;
