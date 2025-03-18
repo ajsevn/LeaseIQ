@@ -10,7 +10,7 @@ from io import BytesIO
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 import logging
-from ml_model import analyze_data  # Directly import from the same folder
+from ml_model import analyze_data,clean_data_for_json  # Directly import from the same folder
 
 # Load environment variables
 load_dotenv()
@@ -54,20 +54,6 @@ def protected():
     current_user = get_jwt_identity()
     return jsonify({"message": f"Hello, {current_user['username']}! This is a protected route."})
 
-# Data Analysis Route
-@app.route("/analyze", methods=["POST"])
-def analyze():
-    try:
-        data = request.get_json()
-        if not isinstance(data, list):
-            return jsonify({"error": "Invalid format. Expected a list of dictionaries."}), 400
-
-        result = analyze_data(data)
-        return jsonify(result)
-    except Exception as e:
-        logging.error(f"Analyze Error: {str(e)}")
-        return jsonify({"error": "Error processing data"}), 500
-
 # File Upload & Processing Route
 @app.route("/upload", methods=["POST"])
 def upload_file():
@@ -79,7 +65,7 @@ def upload_file():
         if file.filename == "":
             return jsonify({"error": "Empty filename"}), 400
 
-        # Secure the filename to prevent path traversal attacks
+        # Secure the filename
         filename = secure_filename(file.filename)
 
         # Read file into DataFrame
@@ -93,11 +79,18 @@ def upload_file():
         if df.empty:
             return jsonify({"error": "Uploaded file is empty"}), 400
 
-        result = analyze_data(df.to_dict(orient="records"))
-        return jsonify(result)
+        # Run analysis (prompt can be optional)
+        prompt = request.form.get("prompt")  # Optional user-defined analysis request
+        result = analyze_data(df, prompt)
+
+        # ✅ Ensure the result is JSON-friendly (No NaNs)
+        cleaned_result = clean_data_for_json(result)
+
+        return jsonify(cleaned_result)  # Now NaNs won't cause issues!
+    
     except Exception as e:
         logging.error(f"Upload Error: {str(e)}")
-        return jsonify({"error": "Error uploading file"}), 500
+        return jsonify({"error": f"Error uploading file: {str(e)}"}), 500
 
 # Export processed data to CSV
 @app.route("/download", methods=["POST"])
@@ -148,6 +141,36 @@ def get_rera_data():
     except Exception as e:
         logging.error(f"❌ Error: {str(e)}")
         return jsonify({"error": "Error retrieving data"}), 500
+    
+@app.route("/overall-analysis", methods=["GET"])
+def overall_analysis():
+    try:
+        # Load the merged CSV with top 5 districts
+        df = pd.read_csv('./datasets/revoked-projects-rera-dataset.csv')
+
+        # Check if data is loaded correctly
+        if df.empty:
+            return jsonify({"error": "CSV file is empty"}), 400
+
+        # Optional: Get column name from query params or default to 'project_area_(sqmts)'
+        column = request.args.get('column', 'sanctioned_fsi')
+
+        # Check if column exists in the dataframe
+        if column not in df.columns:
+            return jsonify({"error": f"Invalid column name: {column}"}), 400
+
+        # Perform the analysis (group by district and sum the selected column)
+        analysis = df.groupby('district')[column].sum().reset_index()
+
+        # Debugging: Print the analysis result to the console for verification
+        print(f"Analysis result:\n{analysis}")
+
+        return jsonify(analysis.to_dict(orient='records'))
+
+    except Exception as e:
+        logging.error(f"❌ Error: {str(e)}")
+        return jsonify({"error": "Error performing overall analysis"}), 500
+
 
 if __name__ == "__main__":
     app.run(port=5001, debug=True)
