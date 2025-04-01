@@ -8,6 +8,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Home from "./pages/Home";
 import Footer from "./pages/Footer";
 import "./styles/Navbar.css";
+// import Calculator from "./components/Calculator";
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
