@@ -1,71 +1,151 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# LeaseIQ - Real Estate Data Analytics App
 
-## Available Scripts
+**LeaseIQ** is an ongoing project designed to provide analytical insights into various real estate data sets. It is a full-stack application built using the **MERN stack** (MongoDB, Express.js, React, Node.js) for the front end and **Flask** for machine learning (ML) operations in the backend. The app aims to visualize and analyze real estate data to help users make better decisions.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Table of Contents
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [Overview](#overview)
+- [Technologies Used](#technologies-used)
+- [Project Structure](#project-structure)
+- [Installation & Setup](#installation--setup)
+  - [Setting Up Backend](#setting-up-backend)
+  - [Setting Up Frontend](#setting-up-frontend)
+- [How to Use](#how-to-use)
+- [Contributions](#contributions)
+- [License](#license)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Overview
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+LeaseIQ leverages data analytics and machine learning to provide insights into real estate markets. Users can upload data, view visualizations, and gain insights into various properties. The platform also includes ML-powered features, such as predictions and trend analysis.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies Used
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Frontend:**
+  - React.js (for building user interface)
+  - React Router (for navigation)
+  - React Icons (for icons)
+  - Tailwind CSS (for styling)
+  - Axios (for making HTTP requests)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Backend:**
+  - Node.js with Express.js (for the RESTful API)
+  - Flask (for machine learning operations)
+  - Pandas, NumPy, scikit-learn (for ML models)
 
-### `npm run eject`
+- **Database:**
+  - MongoDB (for storing real estate data)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Others:**
+  - JWT Authentication (for securing endpoints)
+  - Flask-CORS (for enabling cross-origin requests)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Project Structure
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The project consists of the following directories:
 
-## Learn More
+- **`client/`** - Contains the frontend built with React.js and Tailwind CSS.
+  - `public/` - Contains the `index.html` and static assets.
+  - `src/` - Contains all the React components and routing logic.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **`server/`** - Contains the Node.js/Express API server.
+  - `controllers/` - Contains controllers for API routes.
+  - `models/` - Contains Mongoose models.
+  - `routes/` - Contains Express routes.
+  - `config/` - Contains environment variables and database configurations.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **`ml_service/`** - Contains the Flask backend responsible for machine learning tasks.
+  - `app.py` - Main entry point for the Flask app that handles ML operations.
+  - `models/` - Directory for machine learning models.
+  - `requirements.txt` - Python dependencies for the Flask backend.
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Installation & Setup
 
-### Analyzing the Bundle Size
+### Setting Up Backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. Navigate to the `server/` directory.
+2. Install dependencies for the Node.js backend:
+    ```bash
+    cd server
+    npm install
+    ```
 
-### Making a Progressive Web App
+3. Navigate to the `ml_service/` directory.
+4. Install dependencies for the Flask backend (make sure to have `pip` installed):
+    ```bash
+    cd ml_service
+    pip install -r requirements.txt
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+5. Ensure MongoDB is running locally or configure it with a cloud provider (e.g., MongoDB Atlas).
 
-### Advanced Configuration
+6. In the `server/` directory, set up environment variables:
+    - Create a `.env` file with the necessary credentials:
+      ```env
+      MONGO_URI=your_mongodb_connection_string
+      JWT_SECRET=your_jwt_secret
+      FLASK_APP=app.py
+      ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+7. Start the backend services:
+    ```bash
+    cd server
+    npm start
+    ```
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Setting Up Frontend
 
-### `npm run build` fails to minify
+1. Navigate to the `client/` directory.
+2. Install dependencies for the React frontend:
+    ```bash
+    cd client
+    npm install
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+3. Start the frontend:
+    ```bash
+    npm start
+    ```
 
+The app will be available at `http://localhost:3000`.
+
+---
+
+## How to Use
+
+1. **Sign Up/Log In**: The app requires users to sign up and log in to gain access to its features.
+2. **Upload Data**: Users can upload real estate data in CSV format to analyze various properties.
+3. **Analyze Data**: View visualizations of the data and gain insights into various real estate trends.
+4. **Machine Learning Features**: The ML service provides predictions and trend analysis based on the data uploaded.
+
+---
+
+## Contributions
+
+Contributions to the project are welcome! If you would like to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes and commit them (`git commit -m 'Add feature'`).
+4. Push your changes to your fork (`git push origin feature-branch`).
+5. Open a Pull Request to the `main` branch.
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
