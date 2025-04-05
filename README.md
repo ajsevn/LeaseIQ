@@ -1,7 +1,7 @@
 
 # LeaseIQ - Real Estate Data Analytics App
 
-**LeaseIQ** is an ongoing project designed to provide analytical insights into various real estate data sets. It is a full-stack application built using the **MERN stack** (MongoDB, Express.js, React, Node.js) for the front end and **Flask** for machine learning (ML) operations in the backend. The app aims to visualize and analyze real estate data to help users make better decisions.
+**LeaseIQ** is a project designed to provide analytical insights into various real estate data sets. It is a full-stack application built using the **MERN stack** (MongoDB, Express.js, React, Node.js) for the front end and **Flask** for machine learning (ML) operations in the backend. The app aims to visualize and analyze real estate data to help users make better decisions.
 
 ---
 
