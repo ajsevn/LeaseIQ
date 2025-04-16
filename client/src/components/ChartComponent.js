@@ -1,11 +1,25 @@
 import React from "react";
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+} from "recharts";
 
 const ChartComponent = ({ data }) => {
-  if (!data || !data.columns || !data.row_count) return <p>No chart data available</p>;
+  if (!data || !data.columns || !data.row_count)
+    return <p>No chart data available</p>;
 
   // Generate a colorful dataset
-  const colors = ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"];
+  const colors = [
+    "rgba(75, 192, 192, 0.2)",
+    "rgba(108, 214, 214, 0.76)",
+    "rgba(11, 61, 61, 0.87)",
+    "rgba(75, 192, 192, 0.99)",
+  ];
   const chartData = data.columns.slice(0, 5).map((col, index) => ({
     name: col,
     value: Math.floor(Math.random() * 100),

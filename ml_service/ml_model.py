@@ -19,11 +19,13 @@ def analyze_data(df, prompt=None):
             return {"error": "Dataset is empty."}
 
         # Basic Info
+        preview_data = df.head(min(len(df), 5)).to_dict(orient="records")
         results = {
             "row_count": len(df),
             "column_count": len(df.columns),
             "columns": list(df.columns),
             "missing_values": df.isnull().sum().to_dict(),
+            "preview": preview_data
         }
 
         # Numeric Data Analysis

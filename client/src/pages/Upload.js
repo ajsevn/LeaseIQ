@@ -7,8 +7,7 @@ import {
   FaColumns,
   FaList,
 } from "react-icons/fa";
-import ChartComponent from "../components/ChartComponent"; // Assuming you have a chart component
-
+import ChartComponent from "../components/ChartComponent";
 const Upload = () => {
   const [file, setFile] = useState(null);
   const [insights, setInsights] = useState(null);
@@ -88,8 +87,18 @@ const Upload = () => {
           className="file-input"
           onChange={(e) => setFile(e.target.files[0])}
         />
-        <button className="upload-btn" onClick={handleUpload} disabled={loading}>
-          {loading ? "Uploading..." : <><FaUpload /> Upload & Analyze</>}
+        <button
+          className="upload-btn"
+          onClick={handleUpload}
+          disabled={loading}
+        >
+          {loading ? (
+            "Uploading..."
+          ) : (
+            <>
+              <FaUpload /> Upload & Analyze
+            </>
+          )}
         </button>
       </div>
 
@@ -107,19 +116,52 @@ const Upload = () => {
           <div className="insights-container">
             <div className="insight-card">
               <FaTable className="icon" />
-              <p><strong>Total Rows:</strong> {insights.row_count ?? "N/A"}</p>
+              <p>
+                <strong>Total Rows:</strong> {insights.row_count ?? "N/A"}
+              </p>
             </div>
             <div className="insight-card">
               <FaColumns className="icon" />
-              <p><strong>Total Columns:</strong> {insights.column_count ?? "N/A"}</p>
+              <p>
+                <strong>Total Columns:</strong> {insights.column_count ?? "N/A"}
+              </p>
             </div>
             <div className="insight-card">
               <FaList className="icon" />
-              <p><strong>Columns:</strong> {Array.isArray(insights.columns) 
-                ? insights.columns.map(formatFieldName).join(", ") 
-                : "N/A"}</p>
+              <p>
+                <strong>Columns:</strong>{" "}
+                {Array.isArray(insights.columns)
+                  ? insights.columns.map(formatFieldName).join(", ")
+                  : "N/A"}
+              </p>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Preview Table */}
+
+      {insights?.preview?.length > 0 && (
+        <div className="preview-table-container">
+          <h3 className="section-heading">🔍 Data Preview</h3>
+          <table className="preview-table">
+            <thead>
+              <tr>
+                {Object.keys(insights.preview[0]).map((key) => (
+                  <th key={key}>{formatFieldName(key)}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {insights.preview.map((row, idx) => (
+                <tr key={idx}>
+                  {Object.values(row).map((val, i) => (
+                    <td key={i}>{val}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
 
