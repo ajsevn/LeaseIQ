@@ -36,21 +36,35 @@ router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
 
+        // Log the incoming request data
+        console.log("Received login request with:", { email, password });
+
         // Find user by email
         const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ error: "Invalid email or password" });
+        if (!user) {
+            console.log("User not found");
+            return res.status(400).json({ error: "Invalid email or password" });
+        }
 
-        // Compare passwords
+        // Log the hashed password from the database
+        console.log("JWT_SECRET from env:", process.env.JWT_SECRET);
+        console.log("Hashed password from database:", user.password);
+        console.log("Password being compared:", password);
+
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).json({ error: "Invalid email or password" });
+        if (!isMatch) {
+            console.log("Password mismatch");
+            return res.status(400).json({ error: "Invalid email or password" });
+        }
 
         // Generate JWT token
         const token = jwt.sign(
             { id: user._id, email: user.email },
-            process.env.JWT_SECRET,
-            { expiresIn: process.env.TOKEN_EXPIRY || "1h" }
+            process.env.JWT_SECRET, // Use the environment variable
+            { expiresIn: "1h" } // Hardcoded expiration for testing
         );
 
+        console.log("Login successful, token generated");
         res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
     } catch (error) {
         console.error("Login error:", error.message);

@@ -13,6 +13,31 @@ export const loginUser = async (email, password) => {
   }
 };
 
+// Register API
+export const registerUser = async (name, email, password) => {
+  try {
+    const res = await fetch(`${BASE_URL}/api/auth/register`, {  // Use BASE_URL
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    const contentType = res.headers.get("content-type");
+
+    if (contentType && contentType.includes("application/json")) {
+      return await res.json();
+    } else {
+      const rawText = await res.text();
+      console.error("❌ Non-JSON response received:", rawText);
+      return { error: "Server returned non-JSON response" };
+    }
+  } catch (err) {
+    console.error("API Register error:", err);
+    return { error: "Something went wrong" };
+  }
+};
 
 // Analyze Data API (for JSON data)
 export const analyzeData = async (data, prompt = "") => {
